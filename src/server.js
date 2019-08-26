@@ -12,13 +12,28 @@ app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
-app.get('/', (req, res) => {
+const users = express.Router()
+
+users.post('/add', (req,res) => {
+  res.send({ message: 'user added' })
+})
+
+users.get('/info', (req,res) => {
+  res.send({ name: 'hi' })
+})
+
+users.delete('/delete', (req,res) => {
+  res.send({ message: 'user removed' })
+})
+
+app.use('/user', users)
+
+app.get('/data',(req, res) => {
   res.send({ message: 'hello' })
 })
 
-app.post('/', (req, res) => {
-  console.log(req.body)
-  res.send({ message: 'ok' })
+app.post('/data', (req, res) => {
+  res.send(req.body)
 })
 
 export const start = () => {
